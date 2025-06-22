@@ -5,6 +5,8 @@ export type customButtonType = {
     iconRight?: boolean;
     title: string;
     onPress?: () => void;
+    disable? : boolean;
+    loading? : boolean
 };
 
 export type InputFieldProps = {
@@ -21,4 +23,19 @@ export type InputFieldProps = {
     value: string;
     textContentType: "name" | "password" | "emailAddress";
     onChangeText: (value: string) => void
+};
+
+export type AuthFormType = {
+    email : string,
+    password : string,
+    username? : string,
+    role : string
+}
+
+export type UseAuthReturnType = {
+    onSignUp: (baseurl: string, form: AuthFormType) => Promise<void>;
+    onSignIn: (baseurl: string, form: AuthFormType) => Promise<void>;
+    loading: boolean;
+    showModel: boolean;
+    responseMsg: { success: boolean; message: string };
 };
