@@ -22,7 +22,7 @@ export default function RootLayout() {
   if (!loaded) return null;
   return (
     <Stack screenOptions={{headerShown : false}}>
-      <Stack.Screen name="(auth)/welcome.tsx" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
     </Stack>
   );
 }
