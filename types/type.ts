@@ -36,6 +36,11 @@ export type UseAuthReturnType = {
     onSignUp: (baseurl: string, form: AuthFormType) => Promise<void>;
     onSignIn: (baseurl: string, form: AuthFormType) => Promise<void>;
     loading: boolean;
-    showModel: boolean;
+    showModal: boolean;
     responseMsg: { success: boolean; message: string };
+};
+
+export type TabIconProps = {
+    focused: boolean;
+    icon: any;
 };
