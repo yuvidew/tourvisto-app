@@ -15,7 +15,7 @@ import { customButtonType } from '../types/type';
  *
  * @param {boolean} iconLeft - If true, displays the left icon.
  * @param {boolean} iconRight - If true, displays the right icon.
- * @param {string} title - The text to display on the button.
+ * @param {string} title - The text to display on the n
  * @param {() => void} onPress - Function to call when the button is pressed.
  */
 const CustomButton = ({
