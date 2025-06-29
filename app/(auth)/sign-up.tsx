@@ -1,16 +1,27 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '../../assets/colors';
 import InputField from './_components/InputField';
 import CustomButton from '../../components/CustomButton';
 import Oauth from './_components/Oauth';
-import { Link } from 'expo-router';
-import { AuthFormType } from '../../types/type';
-import Modal from "react-native-modal"; // ✅ Renamed for clarity
+import { Link, router, useNavigation } from 'expo-router';
 import { useAuth } from './hooks/useAuth';
 import { baseURL } from '../../utils/baseurl';
-
+import ModalComp from './_components/Modal';
+import { AuthFormType } from './types/type';
+/**
+ * SignUp screen for user registration.
+ * 
+ * @component
+ * @returns {JSX.Element}
+ * 
+ * @param {void} none - This component does not accept props.
+ * 
+ * @description
+ * Renders a sign-up form with username, email, and password fields.
+ * Handles user registration, shows loading state, and displays a modal on success/error.
+ */
 const SignUp = () => {
   const [visible, setVisible] = useState(false);
   const [form, setForm] = useState<AuthFormType>({
@@ -20,29 +31,45 @@ const SignUp = () => {
     role: "user"
   });
 
-  const { onSignUp, loading, showModel, responseMsg } = useAuth();
+  const { onSignUp, loading, showModal, responseMsg } = useAuth();
 
   useEffect(() => {
-    if (showModel) {
+    let timer: number;
+
+    if (showModal) {
       setVisible(true);
+
+      timer = setTimeout(() => {
+        setVisible(false);
+        router.replace("/(auth)/sign-in")
+      }, 4000);
     }
-  }, [showModel]);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [showModal]);
+
+
+
 
   const handleSignUp = () => {
     onSignUp(baseURL.sign_up, form);
   };
 
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Top Heading */}
+      {/* Start Top Heading */}
       <View style={styles.topBox}>
         <Text style={styles.headline}>Create an account 🔐</Text>
         <Text style={styles.text}>
           Enter your username, email and password to create an account.
         </Text>
       </View>
+      {/* End Top Heading */}
 
-      {/* Signup Form */}
+      {/* start  Signup Form */}
       <View style={styles.formBox}>
         <InputField
           label="Username"
@@ -71,39 +98,34 @@ const SignUp = () => {
 
         <CustomButton
           title={"Sign up"}
-          loading = {loading}
+          loading={loading}
           disable={loading}
           onPress={handleSignUp}
         />
 
-        {/* Google Oauth */}
+        {/* start Google Oauth */}
         <Oauth />
+        {/* end Google Oauth */}
 
-        {/* Redirect to Sign In */}
+        {/* start  Redirect to Sign In */}
         <View style={styles.redirectBox}>
           <Text style={styles.redirectBoxText}>Already have an account?</Text>
           <Link href="/(auth)/sign-in" style={styles.redirectBoxLink}>
             Sign in
           </Link>
         </View>
+        {/* end  Redirect to Sign In */}
       </View>
+      {/* end sign up form */}
 
-      {/* Success / Error Modal */}
-      <Modal isVisible={visible} onBackdropPress={() => setVisible(false)}>
-        <View style={styles.modelBox}>
-          <Text style={styles.headline}>
-            {responseMsg.success ? "🎉 Success" : "❌ Error"}
-          </Text>
-          <Text style={{ fontFamily: "Jakarta-Medium", marginTop: 8 }}>
-            {responseMsg.message}
-          </Text>
-          <TouchableOpacity onPress={() => setVisible(false)} style={{ marginTop: 20 }}>
-            <Text style={{ color: colors.primary[600], fontWeight: "600" }}>
-              Close
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      {/*start  Success / Error Modal */}
+      <ModalComp 
+        visible = {visible} 
+        onBackDropPress={() => setVisible(false)} 
+        responseMsg={responseMsg} 
+      />
+      {/*end  Success / Error Modal */}
+
     </SafeAreaView>
   );
 };
@@ -122,7 +144,7 @@ const styles = StyleSheet.create({
   },
   headline: {
     fontFamily: "Jakarta-Bold",
-    fontSize: 28,
+    fontSize: 20,
     color: colors.primary[600],
     marginBottom: 8,
   },
@@ -148,14 +170,9 @@ const styles = StyleSheet.create({
     fontFamily: "Jakarta-Medium",
     color: colors.primary[700],
   },
-  modelBox: {
-    minHeight: 200,
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
+
+
 });
 
 export default SignUp;
