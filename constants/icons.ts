@@ -12,8 +12,14 @@ const booking = require("@/assets/icons/booking.png")
 const bookingFocus = require("@/assets/icons/booking-focus.png")
 const profile = require("@/assets/icons/profile.png")
 const profileFocus = require("@/assets/icons/profile-focus.png")
+const logo  = require("@/assets/icons/logo.png")
+const alert = require("@/assets/icons/alert.png")
+const check = require("@/assets/icons/check.png")
 
 export const icons = {
+    check,
+    alert,
+    logo,
     rightArrow,
     leftArrow,
     closeEye,
