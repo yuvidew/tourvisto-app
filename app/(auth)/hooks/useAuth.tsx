@@ -101,7 +101,6 @@ export const useAuth = (): UseAuthReturnType => {
                 setResponseMsg({ success: false, message: 'Unexpected status ' + status });
             }
 
-            console.log("response data" , data);
 
         } catch (err: any) {
             
