@@ -47,7 +47,10 @@ const SignIn = () => {
 
       timer = setTimeout(() => {
         setVisible(false);
-        router.replace("/(root)/(tabs)")
+        if (responseMsg.success) {
+          router.replace("/(root)/(tabs)")
+          
+        }
       }, 4000);
     }
 
@@ -61,7 +64,6 @@ const SignIn = () => {
     onSignIn(baseURL.sign_in , form)
   }
 
-  console.log("sign up statatus" , showModal , visible);
 
   return (
     <SafeAreaView style={styles.container}>

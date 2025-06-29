@@ -5,7 +5,7 @@ import { colors } from '../../assets/colors';
 import InputField from './_components/InputField';
 import CustomButton from '../../components/CustomButton';
 import Oauth from './_components/Oauth';
-import { Link, router, useNavigation } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useAuth } from './hooks/useAuth';
 import { baseURL } from '../../utils/baseurl';
 import ModalComp from './_components/Modal';
@@ -41,7 +41,10 @@ const SignUp = () => {
 
       timer = setTimeout(() => {
         setVisible(false);
-        router.replace("/(auth)/sign-in")
+        if (responseMsg.success) {
+          router.replace("/(root)/(tabs)")
+
+        }
       }, 4000);
     }
 
@@ -119,10 +122,10 @@ const SignUp = () => {
       {/* end sign up form */}
 
       {/*start  Success / Error Modal */}
-      <ModalComp 
-        visible = {visible} 
-        onBackDropPress={() => setVisible(false)} 
-        responseMsg={responseMsg} 
+      <ModalComp
+        visible={visible}
+        onBackDropPress={() => setVisible(false)}
+        responseMsg={responseMsg}
       />
       {/*end  Success / Error Modal */}
 
