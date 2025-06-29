@@ -30,7 +30,7 @@ const Welcome = () => {
         <CustomButton
           title={"Let's get started"}
           iconRight
-          onPress={() => router.replace("/(auth)/sign-up")}
+          onPress={() => router.replace("/(auth)/sign-in")}
         />
       </View>
     </SafeAreaView>
