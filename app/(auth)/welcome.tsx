@@ -4,12 +4,14 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { colors } from "../../assets/colors";
 import CustomButton from "../../components/CustomButton";
 import { router } from 'expo-router';
+import { icons } from "../../constants/icons";
 
 const Welcome = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Welcome headline and description */}
       <View style={styles.topWelcomeWrapper}>
+        <Image source={icons.logo} style = {styles.logo} />
         <Text style={styles.headline}>Welcome to Tourvisto</Text>
         <Text style={styles.description}>
           Discover and explore the world&apos;s most beautiful destinations with ease.
@@ -44,6 +46,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 32,
     // justifyContent: "",
+  },
+  logo : {
+    width : 30,
+    height : 30,
+    objectFit : "contain"
   },
   topWelcomeWrapper: {
     marginBottom: 24,
