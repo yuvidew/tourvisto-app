@@ -1,27 +1,67 @@
-import { useEffect, useState } from 'react'
-import axios from "axios"
-import { Platform } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { baseURL } from '../../../utils/baseurl';
+import { TravelPlan } from '../types/type';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useGetTrips = () => {
+    const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [trips, setTrips] = useState([]);
+    const [trips, setTrips] = useState<TravelPlan[]>([]);
+    const [responseMsg, setResponseMsg] = useState<{ success: boolean; message: string }>({
+        success: false,
+        message: '',
+    });
 
-    const DEV_PORT = "2000";
-    const HOST =
-        Platform.OS === "android"
-            ? `http://10.0.2.2:${DEV_PORT}`  // Android emulator loopback
-            : `http://localhost:${DEV_PORT}`;
+
+    const request = async (
+        url: string
+    ): Promise<{ status: number; data: any }> => {
+        const token = await AsyncStorage.getItem("tourvisto-token");
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await res.json();
+        return { status: res.status, data };
+    }
 
     const getTrips = async () => {
+        setLoading(true);
+        setShowModal(false);
         try {
-            console.log("object");
-            const response = await axios.get(
-                `http://localhost:${DEV_PORT}/v1/trip/get-all-trips`
-            );
+            const { status, data } = await request(baseURL.get_trips);
 
-            console.log("trips response : ", response);
+            if (status === 409 || status === 500) {
+                setResponseMsg({ success: false, message: data.message });
+                return;
+            }
+
+            // const tripDetail = (() => {
+            //     if (!data.trips[0].result) return null;
+
+            //     try {
+            //         const cleaned = data.trips[0].result.replace(/```json|```/g, "").trim();
+                    
+            //         return JSON.parse(cleaned);
+            //     } catch (error) {
+            //         console.error("❌ JSON Parse Error:", error);
+            //         return null;
+            //     }
+            // })();
+
+            // if (tripDetail) {
+            //     console.log("trips details" , tripDetail);
+            // }
+
+            setTrips(data.trips);
         } catch (error) {
-            console.log(error);
+            setResponseMsg({ success: false, message: 'An error occurred during sign-up' });
+        } finally {
+            setShowModal(true);
+            setLoading(false);
         }
     }
 
@@ -29,5 +69,5 @@ export const useGetTrips = () => {
         getTrips()
     }, [])
 
-    return { loading, trips }
+    return { loading, trips, responseMsg, showModal, }
 }
