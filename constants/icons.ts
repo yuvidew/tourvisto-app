@@ -15,8 +15,10 @@ const profileFocus = require("@/assets/icons/profile-focus.png")
 const logo  = require("@/assets/icons/logo.png")
 const alert = require("@/assets/icons/alert.png")
 const check = require("@/assets/icons/check.png")
+const star = require("@/assets/icons/star.png");
 
 export const icons = {
+    star,
     check,
     alert,
     logo,
