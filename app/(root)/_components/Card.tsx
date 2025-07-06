@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { colors } from '../../../assets/colors'
 import { FeaturedCardsPropsType } from '../types/type'
+import { icons } from '../../../constants/icons'
 
 /**
  * @component FeaturedCards
@@ -22,10 +23,10 @@ const FeaturedCards = ({
     imageUrl,
     result
 }: FeaturedCardsPropsType) => {
-    const [tripsContent , setTripsContent] = useState({
-        name : "",
-        location : "",
-        price : 0
+    const [tripsContent, setTripsContent] = useState({
+        name: "",
+        location: "",
+        price: 0
     })
     useEffect(() => {
         const tripDetail = (() => {
@@ -43,13 +44,13 @@ const FeaturedCards = ({
 
         if (tripDetail) {
             setTripsContent({
-                name : tripDetail?.name,
-                location : tripDetail?.itinerary?.slice(0, 2).map((day : any) => day.location).join(", ") || "No locations",
-                price : tripDetail?.estimatedPrice
+                name: tripDetail?.name,
+                location: tripDetail?.itinerary?.slice(0, 2).map((day: any) => day.location).join(", ") || "No locations",
+                price: tripDetail?.estimatedPrice
             })
         }
 
-    } , [])
+    }, [])
     return (
         <TouchableOpacity
             style={FeaturedCardsStyles.container}
@@ -60,19 +61,30 @@ const FeaturedCards = ({
                 style={FeaturedCardsStyles.containerImg}
             />
 
+            <Text 
+                style = {{
+                    paddingHorizontal : 14,
+                    paddingVertical : 5,
+                    borderRadius : 100,
+                    backgroundColor : "#fff",
+                    position : "absolute",
+                    top : 10,
+                    right : 5,
+                    fontFamily : "Jakarta-Medium",
+                    color : colors.primary[700]
+                }}
+            >
+                {tripsContent.price}
+            </Text>
+
             <View style={FeaturedCardsStyles.absoluteOverlay}>
-                <View
-                    style={FeaturedCardsStyles.absoluteRatingBox}
-                >
-                    
-                    <Text style={FeaturedCardsStyles.absoluteRatingText} >
-                        {tripsContent.price}
-                    </Text>
-                </View>
                 <View style={FeaturedCardsStyles.absoluteOverlayBox}>
                     {/* Your overlay content */}
                     <Text style={FeaturedCardsStyles.absoluteOverlayHeading}>{tripsContent.name}</Text>
-                    <Text style={FeaturedCardsStyles.absoluteOverlayText} >{tripsContent.location}</Text>
+                    <View style = {{display : "flex" , alignItems : "center" , flexDirection : "row" , gap : 3}}>
+                    <Image source={icons.location} style = {{width : 15 , height : 15}} tintColor={colors.secondary[700]} />
+                    <Text style={FeaturedCardsStyles.absoluteOverlayText} >{tripsContent.location.split(",")[0]}</Text>
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -83,56 +95,60 @@ export default FeaturedCards
 
 const FeaturedCardsStyles = StyleSheet.create({
     container: {
-        display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        position: "relative"
+        position: "relative",
+        borderWidth: 1,
+        borderColor: "#D1D5DB", // light gray
+        borderRadius: 8,
+        overflow: "hidden",
+        backgroundColor: "#fff",
+        width: 250
     },
+
     containerImg: {
-        width: 300,
-        height: 380,
-        borderRadius: 16
+        width: "100%",
+        height: 180,
     },
+
     absoluteOverlay: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
         display: "flex",
-        alignItems: "flex-end",
+        alignItems: "flex-start",
         justifyContent: "flex-end",
-        paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingHorizontal: 5,
+        paddingVertical: 12,
     },
 
     absoluteOverlayBox: {
-        width: 260,
         backgroundColor: "#fff",
         borderRadius: 8,
         paddingHorizontal: 12,
         paddingVertical: 12,
-        borderTopRightRadius: 0
+        borderTopRightRadius: 0,
+        width: "100%",
+        gap : 6
     },
 
     absoluteOverlayHeading: {
         fontFamily: "Jakarta-SemiBold",
         fontSize: 15,
-        color: colors.primary[600]
+        color: colors.primary[600],
     },
 
     absoluteOverlayText: {
         fontFamily: "Jakarta",
         fontSize: 15,
-        color: colors.secondary[600]
+        color: colors.secondary[600],
     },
 
     absoluteRatingBox: {
+        position: "absolute",
+        top: 8,
+        right: 8,
         backgroundColor: "#fff",
-        borderTopEndRadius: 8,
-        borderTopStartRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 12,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
         flexDirection: "row",
         alignItems: "center",
         gap: 4,
@@ -140,13 +156,14 @@ const FeaturedCardsStyles = StyleSheet.create({
 
     absoluteRatingStar: {
         width: 14,
-        height: 14
+        height: 14,
     },
 
     absoluteRatingText: {
         fontSize: 12,
         lineHeight: 16,
         fontFamily: "Jakarta",
-        color: colors.secondary[600]
-    }
-})
+        color: colors.secondary[600],
+    },
+});
+
