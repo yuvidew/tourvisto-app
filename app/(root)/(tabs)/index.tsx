@@ -6,7 +6,8 @@ import { colors } from '../../../assets/colors';
 import Filter from '../_components/Filter';
 import FeaturedCards from '../_components/Card';
 import { useGetTrips } from '../hooks/useGetTrips';
-import { images } from '../../../constants/images';
+import Search from '../_components/Search';
+import { Link } from 'expo-router';
 // import { useGetTrips } from '../hooks/useGetTrips';
 
 const Home = () => {
@@ -14,7 +15,6 @@ const Home = () => {
     const {loading, trips , responseMsg , showModal ,} = useGetTrips()
     return (
         <SafeAreaView style={styles.container}>
-
             <FlatList
                 data={[1, 2, 3, 4]}
                 renderItem={(item) => <Text>{item.index}</Text>}
@@ -39,15 +39,34 @@ const Home = () => {
                         {/* start to header  */}
                         <View style={styles.header}>
                             <View style={styles.headerTextCont}>
-                                <Image source={icons.logo} style={styles.headerIcon} resizeMode="contain" />
-                                <Text style={styles.headerText}>Tourvisto</Text>
+                                <Text style={styles.headerText}>Hii yuvi</Text>
+                                <Text style={styles.headerText1}>Traveling today?</Text>
+                            </View>
+                            <View>
+                                <Image style = {{width : 40 , height : 40 , objectFit : "cover"}} source={icons.man3}  />
                             </View>
                         </View>
                         {/* end to header  */}
 
+                        {/* start to search */}
+                        <Search/>
+                        {/* end to search */}
+
                         {/* start to filter trips card  */}
                         <Filter />
                         {/* end to filter trips card  */}
+
+                        {/* start to popular destination */}
+                        <View style = {styles.popularStandBox}>
+                            <Text style = {styles.popularStandHeadline}>
+                                Popular Destination
+                            </Text>
+
+                            <Link href= "/" style = {styles.popularSeeMore}>
+                                See all
+                            </Link>
+                        </View>
+                        {/* end to popular destination */}
 
                         {/* start filter trips by interests */}
                         <FlatList
@@ -95,25 +114,47 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        justifyContent : "space-between"
     },
 
     headerTextCont: {
         display: "flex",
-        alignItems: "center",
-        flexDirection: "row",
-        gap: 8
+        gap: 2
     },
 
     headerText: {
-        fontFamily: "Jakarta-Bold",
+        fontFamily: "Jakarta-Medium",
+        fontSize: 18,
+        color: colors.secondary[600],
+    },
+    headerText1: {
+        fontFamily: "Jakarta-Medium",
         fontSize: 22,
-        color: colors.primary[600],
-        marginBottom: 8,
+        color: colors.secondary[900],
     },
 
     headerIcon: {
         width: 38,
         height: 38
+    },
+
+    popularStandBox : {
+        display : "flex",
+        alignItems : "center",
+        justifyContent : "space-between",
+        flexDirection : "row"
+    },
+
+    popularStandHeadline : {
+        fontFamily: "Jakarta-Medium",
+        fontSize: 22,
+        color: colors.secondary[900],
+    },
+
+    popularSeeMore : {
+        fontFamily : "Jakarta-Medium",
+        fontSize : 14,
+        color : colors.primary[800]
     }
 })
 
