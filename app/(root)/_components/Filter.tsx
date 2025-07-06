@@ -6,7 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router'
 
 const Filter = () => {
     const params = useLocalSearchParams<{interests? : string}>()
-    const [selectInterest, setSelectInterest] = useState(params.interests || "Food & Culinary")
+    const [selectInterest, setSelectInterest] = useState(params.interests || "🍲 Food & Culinary")
 
     const onInterest = ( value : string) => {
         setSelectInterest(value)
@@ -24,10 +24,9 @@ const Filter = () => {
             {interests.map((item, index) => (
                 <TouchableOpacity
                     key={index}
-                    style={styles.button}
+                    style={[styles.button , selectInterest !== item ? styles.buttonBg : styles.selectButtonBg]}
                     onPress={() => onInterest(item)}
                 >
-                    <View style={[styles.topline, selectInterest !== item ? styles.topLineBg : styles.topLineBgSelected]} />
                     <Text style={[styles.text, selectInterest !== item ? styles.textFamily : styles.textFamilySelected]}>
                         {item}
                     </Text>
@@ -47,8 +46,15 @@ const styles = StyleSheet.create({
         marginRight: 16,
         paddingVertical: 8,
         paddingHorizontal: 16,
+        borderRadius : 60,
         gap: 2
+    },
 
+    buttonBg : {
+        backgroundColor : "#fff"
+    },
+    selectButtonBg : {
+        backgroundColor: colors.primary[600]
     },
 
     topline: {
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
 
     textFamilySelected: {
         fontFamily: "Jakarta-Bold",
-        color: colors.primary[600]
+        color: "#fff"
 
     }
 })
