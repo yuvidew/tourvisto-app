@@ -16,8 +16,14 @@ const logo  = require("@/assets/icons/logo.png")
 const alert = require("@/assets/icons/alert.png")
 const check = require("@/assets/icons/check.png")
 const star = require("@/assets/icons/star.png");
+const man3 = require("@/assets/icons/man-3.png")
+const location = require("@/assets/icons/location-mark.png")
+const search = require("@/assets/icons/search.png")
 
 export const icons = {
+    location,
+    search,
+    man3,
     star,
     check,
     alert,
