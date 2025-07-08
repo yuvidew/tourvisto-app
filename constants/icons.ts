@@ -19,8 +19,12 @@ const star = require("@/assets/icons/star.png");
 const man3 = require("@/assets/icons/man-3.png")
 const location = require("@/assets/icons/location-mark.png")
 const search = require("@/assets/icons/search.png")
+const heart = require("@/assets/icons/heart.png");
+const back = require("@/assets/icons/left.png");
 
 export const icons = {
+    back,
+    heart,
     location,
     search,
     man3,
