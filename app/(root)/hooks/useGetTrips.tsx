@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { baseURL } from '../../../utils/baseurl';
 import { TravelPlan } from '../types/type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
